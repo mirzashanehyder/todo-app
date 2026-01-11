@@ -1,45 +1,53 @@
-// create server
-import express from 'express';
-import { connect } from 'mongoose';
-import cookieParser from 'cookie-parser';
-import { userRoute } from './APIs/userAPI.js';
-import cors from 'cors';
-import { UserModel } from './models/userModel.js';
-import { verifyToken } from './middleware/verifyToken.js';
+import express from "express";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+
+import { userRoute } from "./APIs/userAPI.js";
+import { verifyToken } from "./middleware/verifyToken.js";
+import { UserModel } from "./models/userModel.js";
 
 const app = express();
 
 
-//enable cors
-app.use(cors({origin:["http://localhost:5173"],credentials:true}))
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://your-frontend.vercel.app" 
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/user-api',userRoute);
 
-//connect to db
+app.use("/user-api", userRoute);
+
 async function connectDBAndStartServer() {
-    try{
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log(" MongoDB connected");
 
-        await connect('mongodb+srv://shanehyder:<Pvpsit786>@cluster0.smevrw8.mongodb.net/?appName=Cluster0/pvptododb/pvptododb')
-        console.log("DB connected")
-
-        app.listen(8000,console.log("Server listening on port 8000"));
-
-    } catch(err) {
-
-        console.log("Err in connection with DB",err)
-
-    }
+    const PORT = process.env.PORT || 8000;
+    app.listen(PORT, () => {
+      console.log(` Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error(" DB connection error:", err.message);
+    process.exit(1);
+  }
 }
 
 connectDBAndStartServer();
 
-//page refresh route
-app.get('/refresh', verifyToken, async(req,res) => {
-    console.log('user is',req.user)
-    let userObj = await UserModel.findOne({email:req.user.email});
-    res.status( 200 ).json( { message:"user", payload:userObj } );
-})
-
+app.get("/refresh", verifyToken, async (req, res) => {
+  try {
+    const userObj = await UserModel.findOne({ email: req.user.email });
+    res.status(200).json({ message: "user", payload: userObj });
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching user" });
+  }
+});
