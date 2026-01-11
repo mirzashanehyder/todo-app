@@ -5,17 +5,17 @@ import { Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { FaRegEdit } from "react-icons/fa";
 import { MdTaskAlt } from "react-icons/md";
-import '../App.css';
+import "../App.css";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 function TaskList() {
   const { currentUser, setCurrentUser } = useContext(loginContextObj);
   const { register, handleSubmit, setValue, reset } = useForm();
 
-  // modal state
   const [modalState, setModalState] = useState(false);
   const [taskBeingEdited, setTaskBeingEdited] = useState(null);
 
-  // open edit modal
   const openModal = (taskObj) => {
     setTaskBeingEdited(taskObj);
     setValue("taskName", taskObj.taskName);
@@ -23,7 +23,6 @@ function TaskList() {
     setModalState(true);
   };
 
-  // close modal
   const closeModal = () => {
     setModalState(false);
     setTaskBeingEdited(null);
@@ -34,13 +33,13 @@ function TaskList() {
   const saveModifiedTask = async (modifiedTaskObj) => {
     try {
       const res = await axios.put(
-        `http://localhost:8000/user-api/edit-todo/userid/${currentUser._id}/taskid/${taskBeingEdited._id}`,
+        `${API_URL}/user-api/edit-todo/userid/${currentUser._id}/taskid/${taskBeingEdited._id}`,
         modifiedTaskObj,
         { withCredentials: true }
       );
 
       if (res.status === 200) {
-        setCurrentUser(res.data.payload); // ✅ full updated user
+        setCurrentUser(res.data.payload);
         closeModal();
       }
     } catch (err) {
@@ -53,7 +52,7 @@ function TaskList() {
   const setTaskCompleted = async (taskid) => {
     try {
       const res = await axios.put(
-        `http://localhost:8000/user-api/edit-status/userid/${currentUser._id}/taskid/${taskid}`,
+        `${API_URL}/user-api/edit-status/userid/${currentUser._id}/taskid/${taskid}`,
         {},
         { withCredentials: true }
       );
@@ -70,7 +69,7 @@ function TaskList() {
   const deleteTask = async (taskid) => {
     try {
       const res = await axios.put(
-        `http://localhost:8000/user-api/delete-todo/userid/${currentUser._id}/taskid/${taskid}`,
+        `${API_URL}/user-api/delete-todo/userid/${currentUser._id}/taskid/${taskid}`,
         {},
         { withCredentials: true }
       );
@@ -82,38 +81,32 @@ function TaskList() {
       console.error("Delete failed:", err.response?.data || err.message);
     }
   };
-  const [darkMode, setDarkMode] = useState(false);
 
   return (
-    <div className= {`mt-4 bg-anime `} >
-      
-
+    <div className="mt-4 bg-anime">
       <h1 className="text-center text-success">List of Tasks</h1>
 
       {currentUser?.todos?.length === 0 && (
-        <p className="text-center text-muted"><img className="w-50" src="\src\assets\empty-task.jpg" alt="" /></p>
+        <p className="text-center text-muted">
+          <img className="w-50" src="/src/assets/empty-task.jpg" alt="" />
+        </p>
       )}
 
       {currentUser?.todos?.map((todoObj) => (
         <div
           key={todoObj._id}
-          className={`border p-3 mb-3 rounded position-relative ${
+          className={`border p-3 mb-3 rounded ${
             todoObj.status === "completed" ? "task-completed" : ""
           }`}
         >
-          {/* delete button */}
-          <div className="">
           <button
-            className="btn-close  task-close"
+            className="btn-close task-close"
             onClick={() => deleteTask(todoObj._id)}
-            style={{ top: "10px", right: "10px" }}
           />
-          </div>
 
-          {/* status */}
           <div className="text-end mb-2">
             <span
-              className={`badge status-badge${
+              className={`badge ${
                 todoObj.status === "completed"
                   ? "bg-success"
                   : "bg-warning text-info"
@@ -126,7 +119,7 @@ function TaskList() {
           <h5>{todoObj.taskName}</h5>
           <p>{todoObj.description}</p>
 
-          <div className="d-flex justify-content-end gap-2 task-actions">
+          <div className="d-flex justify-content-end gap-2">
             {todoObj.status !== "completed" && (
               <button
                 className="btn btn-outline-secondary btn-sm"
@@ -146,12 +139,10 @@ function TaskList() {
         </div>
       ))}
 
-      {/* Edit Modal */}
       <Modal show={modalState} onHide={closeModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Edit Task</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
           <form onSubmit={handleSubmit(saveModifiedTask)}>
             <input
@@ -160,16 +151,14 @@ function TaskList() {
               className="form-control mb-3"
               placeholder="Task name"
             />
-
             <input
               type="text"
               {...register("description", { required: true })}
               className="form-control mb-3"
               placeholder="Description"
             />
-
             <button type="submit" className="btn btn-success w-100">
-              Save <MdTaskAlt/>
+              Save <MdTaskAlt />
             </button>
           </form>
         </Modal.Body>
