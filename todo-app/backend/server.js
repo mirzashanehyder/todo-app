@@ -14,11 +14,12 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://your-frontend.vercel.app" 
+      "https://todo-app-seven-sandy.vercel.app"
     ],
     credentials: true,
   })
 );
+
 
 app.use(express.json());
 app.use(cookieParser());
@@ -51,3 +52,4 @@ app.get("/refresh", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Error fetching user" });
   }
 });
+
