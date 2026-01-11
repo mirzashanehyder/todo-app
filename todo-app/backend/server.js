@@ -22,7 +22,7 @@ app.use('/user-api',userRoute);
 async function connectDBAndStartServer() {
     try{
 
-        await connect('mongodb://localhost:27017/pvptododb')
+        await connect('mongodb+srv://shanehyder:<Pvpsit786>@cluster0.smevrw8.mongodb.net/?appName=Cluster0/pvptododb/pvptododb')
         console.log("DB connected")
 
         app.listen(8000,console.log("Server listening on port 8000"));
@@ -42,3 +42,4 @@ app.get('/refresh', verifyToken, async(req,res) => {
     let userObj = await UserModel.findOne({email:req.user.email});
     res.status( 200 ).json( { message:"user", payload:userObj } );
 })
+
