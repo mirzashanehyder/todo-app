@@ -1,0 +1,297 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* ============================= */
+/* GLOBAL BACKGROUND */
+/* ============================= */
+
+.user-profile {
+  min-height: 100vh;
+  padding: 40px 30px;
+  width: 100vw;
+  background: linear-gradient(135deg, #eef2ff, #e0f2fe);
+}
+
+/* Dark mode background */
+.dark-mode .user-profile {
+  background: linear-gradient(135deg, #020617, #0f172a);
+}
+
+/* ============================= */
+/* TASK LIST BACKGROUND */
+/* ============================= */
+
+.bg-anime {
+  width: 100%;
+}
+
+/* ============================= */
+/* TASK CARD */
+/* ============================= */
+
+.task-card {
+  position: relative;
+  background: #ffffff;
+  border-left: 6px solid #0d6efd;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.task-card h5 {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.task-card p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* ============================= */
+/* COMPLETED TASK */
+/* ============================= */
+
+.task-completed {
+  border-left-color: #198754;
+  background: #f1fdf6;
+}
+
+.task-completed h5,
+.task-completed p {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+/* ============================= */
+/* STATUS BADGE */
+/* ============================= */
+
+.status-badge {
+  font-size: 0.7rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.completed {
+  background: #198754;
+  color: #ffffff;
+}
+
+.status-badge.pending {
+  background: #ffc107;
+  color: #212529;
+}
+
+/* ============================= */
+/* TASK ACTION BUTTONS */
+/* ============================= */
+
+.task-actions button {
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+/* Delete (close) button */
+.task-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+/* ============================= */
+/* MODAL */
+/* ============================= */
+
+.modal-content {
+  border-radius: 15px;
+}
+
+.modal-header {
+  background: #0d6efd;
+  color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.modal-header .btn-close {
+  filter: invert(1);
+}
+
+/* ============================= */
+/* CREATE TASK */
+/* ============================= */
+
+.create-task-container {
+  max-width: 520px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.create-task-title {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #0d6efd;
+}
+
+.create-task-container input {
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #ced4da;
+}
+
+.create-task-container input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Create button */
+.create-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  color: white;
+  background: linear-gradient(135deg, #0d6efd, #38bdf8);
+  transition: all 0.3s ease;
+}
+.sub-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  color: white;
+  background: linear-gradient(135deg, #0d6efd, #38bdf8);
+  transition: all 0.3s ease;
+}
+
+.create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(13, 110, 253, 0.3);
+}
+
+/* ============================= */
+/* PROFILE LAYOUT */
+/* ============================= */
+
+.profile-card {
+  padding: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-card {
+    margin-bottom: 30px;
+  }
+}
+
+/* ============================= */
+/* DARK MODE */
+/* ============================= */
+
+.dark-mode {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+/* Task card */
+.dark-mode .task-card {
+  background: #1e293b;
+  border-left-color: #38bdf8;
+  color: #e5e7eb;
+}
+
+.dark-mode .task-card:hover {
+  box-shadow: 0 12px 30px rgba(56, 189, 248, 0.25);
+}
+
+/* Completed task */
+.dark-mode .task-completed {
+  background: linear-gradient(135deg, #052e16, #064e3b);
+  border-left-color: #22c55e;
+}
+
+.dark-mode .task-completed h5,
+.dark-mode .task-completed p {
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+/* Status badge */
+.dark-mode .status-badge.completed {
+  background: #22c55e;
+  color: #052e16;
+}
+
+.dark-mode .status-badge.pending {
+  background: #facc15;
+  color: #422006;
+}
+
+/* Buttons */
+.dark-mode .btn-outline-secondary {
+  color: #e5e7eb;
+  border-color: #64748b;
+}
+
+.dark-mode .btn-outline-secondary:hover {
+  background: #334155;
+}
+
+/* Modal */
+.dark-mode .modal-content {
+  background: #1e293b;
+  color: #e5e7eb;
+}
+
+.dark-mode .modal-header {
+  background: #0f172a;
+  border-bottom: 1px solid #334155;
+}
+
+.dark-mode .modal-header .btn-close {
+  filter: invert(1);
+}
+
+/* Inputs */
+.dark-mode input {
+  background: #0f172a;
+  color: #e5e7eb;
+  border: 1px solid #334155;
+}
+
+.dark-mode input::placeholder {
+  color: #9ca3af;
+}
+
+/* Create task dark */
+.dark-mode .create-task-container {
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.dark-mode .create-task-title {
+  color: #38bdf8;
+}

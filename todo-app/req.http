@@ -1,0 +1,55 @@
+### User Registeration
+POST http://localhost:8000/user-api/user
+Content-Type: application/json
+
+{
+    "name" : "Shane Hyder",
+    "email": "hyder@gmail.com",
+    "password": "78611072@",
+    "todos": []
+}
+
+
+### User Login
+POST http://localhost:8000/user-api/login
+Content-Type: application/json
+
+{
+    "email": "hyder@gmail.com",
+    "password": "78611072@"
+}
+
+
+
+### Add task
+PUT http://localhost:8000/user-api/todo/69315e769472b8233c5d089c
+Content-Type: application/json
+
+{
+    "taskName": "Eating 1",
+    "description" : "Time to eat"
+}
+
+### Edit task
+PUT http://localhost:8000/user-api/edit-todo/userid/69315e769472b8233c5d089c/taskid/69315e969472b8233c5d08a1
+Content-Type: application/json
+
+{
+    "taskName": "Sleeping",
+    "description" : "Sleep Early"
+}
+
+### Set task completed
+PUT http://localhost:8000/user-api/edit-status/userId/69315e769472b8233c5d089c/taskid/69315e969472b8233c5d08a1
+Content-Type: application/json
+
+{
+
+}
+### Delete task
+PUT http://localhost:8000/user-api/delete-todo/userid/69315e769472b8233c5d089c/taskid/69315e969472b8233c5d08a1
+Content-Type: application/json
+
+{
+   
+}
