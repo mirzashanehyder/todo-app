@@ -12,27 +12,30 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://todo-app-seven-sandy.vercel.app",
+  "https://todo-app-seven-sandy.vercel.app"
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow server-to-server, Postman, etc.
       if (!origin) return callback(null, true);
-
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-
-      return callback(new Error("Not allowed by CORS"));
+      return callback(new Error("CORS not allowed"));
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Cookie"
+    ],
   })
 );
 
+// 🔥 VERY IMPORTANT (handles preflight fully)
+app.options("*", cors());
 
 
 app.use(express.json());
@@ -66,5 +69,6 @@ app.get("/refresh", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Error fetching user" });
   }
 });
+
 
 
