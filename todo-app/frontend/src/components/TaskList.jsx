@@ -16,6 +16,7 @@ function TaskList() {
   const [modalState, setModalState] = useState(false);
   const [taskBeingEdited, setTaskBeingEdited] = useState(null);
 
+  // open edit modal
   const openModal = (taskObj) => {
     setTaskBeingEdited(taskObj);
     setValue("taskName", taskObj.taskName);
@@ -23,6 +24,7 @@ function TaskList() {
     setModalState(true);
   };
 
+  // close modal
   const closeModal = () => {
     setModalState(false);
     setTaskBeingEdited(null);
@@ -43,12 +45,11 @@ function TaskList() {
         closeModal();
       }
     } catch (err) {
-      console.error("Edit failed:", err.response?.data || err.message);
-      alert("Failed to save task");
+      alert("Failed to update task");
     }
   };
 
-  // mark task as completed
+  // mark task completed
   const setTaskCompleted = async (taskid) => {
     try {
       const res = await axios.put(
@@ -61,7 +62,7 @@ function TaskList() {
         setCurrentUser(res.data.payload);
       }
     } catch (err) {
-      console.error("Status update failed:", err.response?.data || err.message);
+      alert("Failed to update status");
     }
   };
 
@@ -78,7 +79,7 @@ function TaskList() {
         setCurrentUser(res.data.payload);
       }
     } catch (err) {
-      console.error("Delete failed:", err.response?.data || err.message);
+      alert("Failed to delete task");
     }
   };
 
@@ -88,28 +89,32 @@ function TaskList() {
 
       {currentUser?.todos?.length === 0 && (
         <p className="text-center text-muted">
-          <img className="w-50" src="/src/assets/empty-task.jpg" alt="" />
+          <img className="w-50" src="/src/assets/empty-task.jpg" alt="No tasks" />
         </p>
       )}
 
       {currentUser?.todos?.map((todoObj) => (
         <div
           key={todoObj._id}
-          className={`border p-3 mb-3 rounded ${
+          className={`border p-3 mb-3 rounded position-relative ${
             todoObj.status === "completed" ? "task-completed" : ""
           }`}
         >
+          {/* DELETE BUTTON */}
           <button
-            className="btn-close task-close"
+            className="btn btn-danger btn-sm task-close"
             onClick={() => deleteTask(todoObj._id)}
-          />
+          >
+            ✕
+          </button>
 
+          {/* STATUS */}
           <div className="text-end mb-2">
             <span
               className={`badge ${
                 todoObj.status === "completed"
                   ? "bg-success"
-                  : "bg-warning text-info"
+                  : "bg-warning text-dark"
               }`}
             >
               {todoObj.status}
@@ -139,6 +144,7 @@ function TaskList() {
         </div>
       ))}
 
+      {/* EDIT MODAL */}
       <Modal show={modalState} onHide={closeModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Edit Task</Modal.Title>
