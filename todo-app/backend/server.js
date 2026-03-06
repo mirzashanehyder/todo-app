@@ -12,7 +12,8 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://todo-app-seven-sandy.vercel.app"
+  "https://todo-app-seven-sandy.vercel.app",
+  "https://todo-pfzntlf6w-mirza-shane-hyders-projects.vercel.app"
 ];
 
 app.use(
@@ -67,6 +68,7 @@ app.get("/refresh", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Error fetching user" });
   }
 });
+
 
 
 
