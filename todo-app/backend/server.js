@@ -35,7 +35,7 @@ app.use(
   })
 );
 
-
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -68,6 +68,7 @@ app.get("/refresh", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Error fetching user" });
   }
 });
+
 
 
 
