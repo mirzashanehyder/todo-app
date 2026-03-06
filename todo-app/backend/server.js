@@ -34,8 +34,6 @@ app.use(
   })
 );
 
-// 🔥 VERY IMPORTANT (handles preflight fully)
-app.options("*", cors());
 
 
 app.use(express.json());
@@ -69,6 +67,7 @@ app.get("/refresh", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Error fetching user" });
   }
 });
+
 
 
 
