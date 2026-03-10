@@ -15,7 +15,7 @@ function Login() {
 
   //login form submit
   const onLoginFormSubmit = (userCredObj) => {
-    console.log(userCredObj);
+    //console.log(userCredObj);
     userLogin(userCredObj);
   };
 
@@ -61,5 +61,6 @@ User Login</h1>
     </div>
   );
 }
+
 
 export default Login;
